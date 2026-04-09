@@ -100,6 +100,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  document.getElementById("export-btn").addEventListener("click", async () => {
+    const target = document.getElementById("capture-area");
+    if (!target) return;
+
+    try {
+      const canvas = await html2canvas(target, {
+        backgroundColor: null,
+        useCORS: true,
+        scale: 2
+      });
+
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = "tact-formation.png";
+      link.click();
+    } catch (error) {
+      console.error("画像出力に失敗しました:", error);
+      alert("画像出力に失敗しました。");
+    }
+  });
+
   loadSavedData();
 
   const court = document.getElementById("capture-area");
